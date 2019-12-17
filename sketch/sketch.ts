@@ -3,10 +3,15 @@
  * This is a good place to load assets such as
  * sound files, images etc...
  */
+let bee:p5.Image;
+let splatt:p5.Image;
+
 function preload() {
     // Tyvärr har jag inte fått till den globala typningen för
     // inladdningen av ljud men fungerar bra enligt nedan..
     // sound = (window as any).loadSound('../assets/mySound.wav');
+    bee = loadImage('./assets/images/bee.png');
+    splatt = loadImage('./assets/images/splatt.png');
 }
 
 /**
@@ -19,10 +24,10 @@ let bubbles:any = [];
 function setup() {
     createCanvas(500, 550);
     frameRate(60);
-    noCursor();
+    //noCursor();
     fullscreen();
-    for (let index = 0; index < 100; index++) {
-        bubbles[index] = new Bubble(random(100,500),random(100,500),30);  
+    for (let index = 0; index < 50; index++) {
+        bubbles[index] = new Bubble(random(0,500),random(0,500), random(10,100), random(20,110), bee);  
     }
 }
 
@@ -42,7 +47,7 @@ function draw() {
 
 /*     bubble1 = new Bubble(mouseX, mouseY, 100);
     bubble2 = new Bubble(50, 300, 50); */
-    for (let index = 0; index < 100; index++) {
+    for (let index = 0; index < bubbles.length; index++) {
         bubbles[index].show(); 
     }
     let rectangle1 = new Rectangle(mouseX, squareY, 100,50);
@@ -94,13 +99,22 @@ class Bubble{
     
     public x: any;
     public y: any;
-    public radius: number;
+    //public radius: number;
+    public height:number;
+    public width:any;
+    public img:p5.Image;
 
-    public constructor(x: any, y: any, radius:number){
+
+    public constructor(x: any, y: any, height:number,width:number, img:p5.Image){
 
         this.x = x;
         this.y = y;
-        this.radius = radius;
+        //this.radius = radius;
+        this.height = height;
+        this.width = width;
+        this.img = img
+
+    
     }
 
     //making my bubbles 
@@ -109,9 +123,16 @@ class Bubble{
         this.y = this.y + random(-10, 10);
     }
 
+    public clicked(px:number, py:number){
+        //let d = dist(px, py, this.x, this.y)
+        if(px > this.x && px < this.x + this.width && py > this.y && py < this.y + this.height){
+            this.img = splatt;
+        }
+    }
+
     public show(){
         
-         noStroke()
+/*          noStroke()
         if(mouseX<300){
             fill('pink')
         }
@@ -126,8 +147,10 @@ class Bubble{
             break;
         } */
 
+        this.clicked(mouseX, mouseY);
         this.move();
-        return circle(this.x, this.y, this.radius);
+        //circle(this.x, this.y, this.radius);
+        image(this.img, this.x, this.y, this.width, this.height);
     }  
 }
 
