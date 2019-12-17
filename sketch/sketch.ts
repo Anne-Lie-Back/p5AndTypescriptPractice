@@ -33,8 +33,10 @@ let bgColor:any = 'black';
 let squareY:number = 0;
 let squareSpeed:number = 1
 
+
 function draw() {
     background(bgColor);
+
     let bubble1 = new Bubble(mouseX, mouseY, 100);
     let bubble2 = new Bubble(50, 300, 50);
     let rectangle1 = new Rectangle(mouseX, squareY, 100,50);
@@ -43,12 +45,12 @@ function draw() {
     bubble1.show();
     bubble2.show();
     rectangle1.move();
-    rectangle1.show();
+    rectangle1.show(mouseX, "red");
+    rectangle1.show(200, "white");
     //rectangle1.move();
 /* 
     ellipse(circleX, mouseY, 60, 60);
     circleX = circleX + 1;*/
-
 
 }
 
@@ -66,22 +68,25 @@ class Rectangle{
     }
 
     public move(){
+
+        
         if (squareY > 550){
             squareSpeed = -1
         }
         
         if (squareY < 0){
             squareSpeed = + 1
-        }   
+        } 
+          
         squareY = squareY + squareSpeed;
     }
 
 
-    public show(){
+    public show(x:any, color:string){
         rectMode(CENTER);
-        fill('red');
+        fill(color);
         console.log(this.y);  
-        return rect(this.x, this.y, this.width, this.height);
+        return rect(x, this.y, this.width, this.height);
          
     }
 }
@@ -155,12 +160,18 @@ class Bubble{
             fill('lightgreen');
         } 
         ellipseMode(CENTER);
-        return circle(this.x, this.y, this.radius);
+        while(this.x<550){
+            circle(this.x, this.y, this.radius);
+            this.x + 50;
+            break;
+        }
+        return circle;
     }  
 }
 
 
 function mousePressed(){
+
     if (bgColor === 'black'){
         bgColor = 'blue';
     }
@@ -168,7 +179,7 @@ function mousePressed(){
     else{
         bgColor = 'black';
     }
-    
+  
 }
 /* class Bubble{
     private radius: number;
