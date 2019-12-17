@@ -15,11 +15,15 @@ function preload() {
  * and save it as a global variable so it can be used
  * in the draw function below
  */
+let bubbles:any = [];
 function setup() {
     createCanvas(500, 550);
     frameRate(60);
     noCursor();
     fullscreen();
+    for (let index = 0; index < 100; index++) {
+        bubbles[index] = new Bubble(random(100,500),random(100,500),30);  
+    }
 }
 
 /**
@@ -29,17 +33,22 @@ function setup() {
  */
 let bgColor:any = 'black';
 let squareY:number = 0;
-let squareSpeed:number = 1
+let squareSpeed:number = 1;
+let bubble1;
+let bubble2;
 
 function draw() {
     background(bgColor);
 
-    let bubble1 = new Bubble(mouseX, mouseY, 100);
-    let bubble2 = new Bubble(50, 300, 50);
+/*     bubble1 = new Bubble(mouseX, mouseY, 100);
+    bubble2 = new Bubble(50, 300, 50); */
+    for (let index = 0; index < 100; index++) {
+        bubbles[index].show(); 
+    }
     let rectangle1 = new Rectangle(mouseX, squareY, 100,50);
 
-    bubble1.show();
-    bubble2.show();
+/*     bubble1.show();
+    bubble2.show(); */
     rectangle1.show(mouseX, "red");
     rectangle1.show(200, "white");
 }
