@@ -27,7 +27,7 @@ function setup() {
     //noCursor();
     fullscreen();
     for (let index = 0; index < 50; index++) {
-        bubbles[index] = new Bubble(random(0,500),random(0,500), random(10,100), random(20,110), bee);  
+        bubbles[index] = new Bubble(random(0,500),random(0,500), random(10,100), random(20,110), bee, false);  
     }
 }
 
@@ -103,31 +103,42 @@ class Bubble{
     public height:number;
     public width:any;
     public img:p5.Image;
+    public isBeeDead:boolean;
 
 
-    public constructor(x: any, y: any, height:number,width:number, img:p5.Image){
+    public constructor(x: any, y: any, height:number,width:number, img:p5.Image, isBeeDead:boolean){
 
         this.x = x;
         this.y = y;
         //this.radius = radius;
         this.height = height;
         this.width = width;
-        this.img = img
-
-    
+        this.img = img;
+        this.isBeeDead = isBeeDead;
     }
 
     //making my bubbles 
     public move(){
         this.x = this.x + random(-5, 5);
-        this.y = this.y + random(-10, 10);
+        this.y = this.y + random(-5, 5);
+        if(this.isBeeDead){
+            this.y = this.y + 3;
+        }
+        
     }
 
-    public clicked(px:number, py:number){
+    public clicked(){
         //let d = dist(px, py, this.x, this.y)
-        if(px > this.x && px < this.x + this.width && py > this.y && py < this.y + this.height){
+
+    let px:number = mouseX;
+    let py:number = mouseY;
+    
+        if(px > this.x && px < this.x + this.width && py > this.y && py < this.y + this.height){        
+            
             this.img = splatt;
+            this.isBeeDead = true
         }
+
     }
 
     public show(){
@@ -147,7 +158,7 @@ class Bubble{
             break;
         } */
 
-        this.clicked(mouseX, mouseY);
+        this.clicked();
         this.move();
         //circle(this.x, this.y, this.radius);
         image(this.img, this.x, this.y, this.width, this.height);
@@ -164,6 +175,7 @@ function mousePressed(){
     else{
         bgColor = 'black';
     }
+    
 }
 
 /**
