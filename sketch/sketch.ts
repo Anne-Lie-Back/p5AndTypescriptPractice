@@ -20,8 +20,6 @@ function setup() {
     frameRate(60);
     noCursor();
     fullscreen();
-
-
 }
 
 /**
@@ -33,25 +31,17 @@ let bgColor:any = 'black';
 let squareY:number = 0;
 let squareSpeed:number = 1
 
-
 function draw() {
     background(bgColor);
 
     let bubble1 = new Bubble(mouseX, mouseY, 100);
     let bubble2 = new Bubble(50, 300, 50);
     let rectangle1 = new Rectangle(mouseX, squareY, 100,50);
-    //circle1.fill();
-    //circle1.fillColor();
+
     bubble1.show();
     bubble2.show();
-    rectangle1.move();
     rectangle1.show(mouseX, "red");
     rectangle1.show(200, "white");
-    //rectangle1.move();
-/* 
-    ellipse(circleX, mouseY, 60, 60);
-    circleX = circleX + 1;*/
-
 }
 
 class Rectangle{
@@ -68,14 +58,13 @@ class Rectangle{
     }
 
     public move(){
-
-        
+  
         if (squareY > 550){
-            squareSpeed = -1
+            squareSpeed = -3
         }
         
         if (squareY < 0){
-            squareSpeed = + 1
+            squareSpeed = + 3
         } 
           
         squareY = squareY + squareSpeed;
@@ -85,28 +74,12 @@ class Rectangle{
     public show(x:any, color:string){
         rectMode(CENTER);
         fill(color);
-        console.log(this.y);  
+        this.move();
         return rect(x, this.y, this.width, this.height);
          
     }
 }
-/* 
- abstract class Color{
-    
-    public r: number;
-    public g: number;
-    public b: number;
 
-    public constructor(){
-        this.r = random(255);
-        this.g = random(255);
-        this.b = random(255);
-    }
-
-     public fillColor(){
-        return fill(this.r, this.g, this.b);
-    }    
-}  */
 //still trying to solve problem with typescript and classes
 class Bubble{
     
@@ -115,42 +88,19 @@ class Bubble{
     public radius: number;
 
     public constructor(x: any, y: any, radius:number){
-        //super();
+
         this.x = x;
         this.y = y;
         this.radius = radius;
-        //this.fillColor();
     }
 
-/*      public colorRandomizer(){
-
-        const r = random(255);
-        const g = random(255);
-        const b = random(255);
-
-        return fill(r, g, b);
-    }  */ 
-
-/*     public setRandomizedColor(){
-        randomSeed(99)
-        for (let i = 0; i < 100; i++){
-            let r:number = random(0,255);
-            let g:number = random(0,255);
-            let b:number = random(0,255);
-            return fill(r,g,b);
-        }
-    } */
-
-/*      public randomizeColorBubbles(){
-        let colorOfBubbles = ["pink" , "skyblue" , "lightgreen"];
-        return random(colorOfBubbles);
-    } */ 
+    //making my bubbles 
+    public move(){
+        this.x = this.x + random(-5, 5);
+        this.y = this.y + random(-10, 10);
+    }
 
     public show(){
-        //fill(this.randomizeColorBubbles());
-        //this.setRandomizedColor();
-        //this.colorRandomizer();
-        //fill(this.randomizeColorBubbles());
         
          noStroke()
         if(mouseX<300){
@@ -159,13 +109,16 @@ class Bubble{
         else{
             fill('lightgreen');
         } 
+
         ellipseMode(CENTER);
-        while(this.x<550){
+/*         while(this.x<550){
             circle(this.x, this.y, this.radius);
             this.x + 50;
             break;
-        }
-        return circle;
+        } */
+
+        this.move();
+        return circle(this.x, this.y, this.radius);
     }  
 }
 
@@ -179,11 +132,7 @@ function mousePressed(){
     else{
         bgColor = 'black';
     }
-  
 }
-/* class Bubble{
-    private radius: number;
-} */
 
 /**
  *  Built in windowResize listener function in P5
